@@ -17,6 +17,10 @@ export default {
         beVietnamMedium: "var(--font-be-vietnam-medium)",
         beVietnamSemiBold: "var(--font-be-vietnam)"
       },
+      screens: {
+        'tablet': {min: '568px', max: '1024px' },
+        'custom': '1401px'
+      },
     },
   },
   plugins: [],

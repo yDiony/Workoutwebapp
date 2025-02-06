@@ -13,7 +13,7 @@ export default function page() {
     const [totalsteps, settotalsteps] = useState(10000)
     const [valorprogredidosteps, setvalorprogredidosteps] = useState(4200)
     return (
-        <div className="max-h-[85vh] overflow-y-auto">
+        <div className="max-h-[85vh] overflow-y-auto max-w-[100vw] min-h-[80vh] flex flex-col custom:px-[35%] tablet:px-[20%]">
             <div className="w-[100%] flex flex-col items-center justify-center">
                 <div className="w-[90%] flex justify-between items-center mt-[5%]">
                     <div className={"rounded-[100%] w-[56px] h-[56px] "}>

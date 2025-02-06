@@ -27,7 +27,7 @@ export const Navbar = () => {
 
 
     return (
-        <div className="fixed bottom-0 h-[15vh] flex justify-evenly w-[100%] bg-white z-50">
+        <div className="fixed bottom-0 h-[15vh] flex justify-evenly w-[100%] bg-white z-50 ">
             <button onClick={() => mudarcoresecaminho("/dashboard")} className="flex flex-col items-center justify-center">
                 <Homeicon color={caminhodousuario === "/dashboard" ? "black" : "gray"} />
                 <p className={`font-[montserrat] font-medium text-[13px] ${caminhodousuario === "/dashboard" ? "text-black" : "text-gray-400"}`}>Home</p>
