@@ -1,5 +1,5 @@
 import Image from "next/image"
-import imagemdefundo from "@/app/images/image 7.png"
+import imagemdefundo from "@/app/images/imagemdefundo.png"
 
 export default function page() {
     return(

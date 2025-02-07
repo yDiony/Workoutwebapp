@@ -1,7 +1,9 @@
 'use client'
 
+
 import { useState, useEffect } from "react";
 import { Lixoicon } from "@/app/components/Lixoicon/page";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function Page() {
     const [treinos, setTreinos] = useState<{ dia: string; treinos: string[] }[]>([]);
@@ -18,15 +20,15 @@ export default function Page() {
             setTreinos(JSON.parse(storedTreinos));
         }
     }, []);
-    
+
     useEffect(() => {
-        
+
         const treinosOrdenados = [...treinos].sort((a, b) => diasDaSemana.indexOf(a.dia) - diasDaSemana.indexOf(b.dia));
-        
-       
+
+
         if (JSON.stringify(treinosOrdenados) !== JSON.stringify(treinos)) {
             localStorage.setItem("treinos", JSON.stringify(treinosOrdenados));
-            setTreinos(treinosOrdenados); 
+            setTreinos(treinosOrdenados);
         }
     }, [treinos]);
 
@@ -84,14 +86,9 @@ export default function Page() {
                             <p className="mb-2 font-[montserrat] ">Day of the week:</p>
                             <div className="grid grid-cols-3 gap-2">
                                 {diasDaSemana.map((dia, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setDiaEscolhido(dia)}
-                                        disabled={treinos.some(t => t.dia === dia)}
-                                        className={`font-[montserrat] p-2 rounded-lg border  ${diaEscolhido === dia ? "border-solid border-[2px] border-black" : "bg-white"} ${treinos.some(t => t.dia === dia) ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
-                                    >
+                                    <motion.button disabled={treinos.some(t => t.dia === dia)} onClick={() => setDiaEscolhido(dia)} key={index} className={`font-[montserrat] p-2 rounded-lg border  ${diaEscolhido === dia ? "border-solid border-[2px] border-black" : "bg-white"} ${treinos.some(t => t.dia === dia) ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
                                         {dia}
-                                    </button>
+                                    </motion.button>
                                 ))}
                             </div>
                         </div>
@@ -99,13 +96,14 @@ export default function Page() {
                             <p className="mb-2 font-[montserrat] ">Exercises (max 2):</p>
                             <div className="grid grid-cols-2 gap-2">
                                 {tiposTreino.map((treino, index) => (
-                                    <button
+                                    <motion.button
+                                        whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}
                                         key={index}
                                         onClick={() => toggleTreinoSelecionado(treino)}
                                         className={`font-[montserrat] p-2 rounded-lg border ${treinosEscolhidos.includes(treino) ? "border-solid border-[2px] border-black" : "bg-white"} hover:bg-gray-200`}
                                     >
                                         {treino}
-                                    </button>
+                                    </motion.button>
                                 ))}
                             </div>
                         </div>
@@ -119,20 +117,30 @@ export default function Page() {
             <div>
                 {treinos.length > 0 ? (
                     <ul>
-                        {treinos.map((treino, index) => (
-                            <li key={index}>
-                                <div className="w-[90%] flex mt-[5%] ml-[5%]">
-                                    <div className="w-[100%] flex items-center">
-                                        <div className="w-[72px] h-[72px] bg-black items-center justify-center flex rounded-[100%]">
-                                            <p className=" font-[montserrat] text-white font-medium text-[16px]">{treino.dia}</p>
-                                        </div>
-                                        <p className="w-[70%] ml-[5%] font-[montserrat] text-black text-[20px] font-medium">{treino.treinos.join(" and ")}</p>
-                                <button onClick={() => excluirTreino(treino.dia)} className=""><Lixoicon /></button> 
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    {treinos.map((treino, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }} // Inicia com a opacidade 0 e deslocado para baixo
+                        animate={{ opacity: 1, y: 0 }} // Anima para opacidade 1 e posição original
+                        exit={{ opacity: 0, y: 20 }} // Quando o item sair, ele desaparece e se move para baixo
+                        transition={{ duration: 1, ease: "easeOut", delay: index * 0.3 }} // Duração e atraso para cada item
+                      >
+                        <div className="w-[90%] flex mt-[5%] ml-[5%]">
+                          <div className="w-[100%] flex items-center">
+                            <div className="w-[72px] h-[72px] bg-black items-center justify-center flex rounded-[100%]">
+                              <p className="font-[montserrat] text-white font-medium text-[16px]">{treino.dia}</p>
+                            </div>
+                            <p className="w-[70%] ml-[5%] font-[montserrat] text-black text-[20px] font-medium">
+                              {treino.treinos.join(" and ")}
+                            </p>
+                            <button onClick={() => excluirTreino(treino.dia)} className="">
+                              <Lixoicon />
+                            </button>
+                          </div>
+                        </div>
+                      </motion.li>
+                    ))}
+                  </ul>
                 ) : (
                     <p>Nenhum treino agendado ainda.</p>
                 )}

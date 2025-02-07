@@ -1,5 +1,6 @@
 import React from "react";
 import { Stepsicon } from "../stepsicon/page";
+import { motion } from "motion/react";
 
 interface CircularProgressProps {
   value: number; // Valor atual
@@ -32,7 +33,7 @@ const StepsCircular: React.FC<CircularProgressProps> = ({
           fill="none"
         />
         {/* Círculo de progresso */}
-        <circle
+        <motion.circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
@@ -40,7 +41,14 @@ const StepsCircular: React.FC<CircularProgressProps> = ({
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference} // Define o comprimento total do traço
-          strokeDashoffset={progress} // Agora a barra cresce no sentido horário
+          initial={{ strokeDashoffset: circumference }} // Começa com a barra cheia
+          animate={{
+            strokeDashoffset: circumference - progress, // Anima de cheio para o valor de progresso
+          }}
+          transition={{
+            duration: 1, // Duração da animação (ajuste conforme necessário)
+            ease: "easeOut", // Tipo de animação (suave)
+          }}
           strokeLinecap="round"
           transform={`rotate(90 ${size / 2} ${size / 2})`} // Rotaciona para iniciar do lado direito
         />
