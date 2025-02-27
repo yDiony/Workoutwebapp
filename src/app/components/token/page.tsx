@@ -14,7 +14,7 @@ const setTokenWithExpiry = () => {
 };
 
 const getToken = () => {
-  return Cookies.get('authToken') || null;
+  return Cookies.get('authTnpmoken') || null;
 };
 
 const TokenButton = () => {

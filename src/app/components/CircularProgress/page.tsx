@@ -2,37 +2,29 @@
 
 import React, { useState } from "react";
 import { Fireicon } from "../fireicon/page";
-
 import { motion } from "motion/react";
 
-interface CircularProgressProps {
-  value: number;
-  total: number;
-  size?: number;
-  strokeWidth?: number;
-}
 
-const CircularProgress: React.FC<CircularProgressProps> = ( {
-  value,
-  total,
-  size = 175,
-  strokeWidth = 25,
-} ) => {
+ const CircularProgress = (props:any) =>  {
+  const { value,
+   total,
+   size = 175,
+   strokeWidth = 25,
+  } = props;
+
   const [openModal, setopenModal] = useState(false);
   const percentage = Math.min(Math.max((value / total) * 100, 0), 100); // Garante que fique entre 0 e 100
   const radius = (size - strokeWidth) / 2; // Raio do círculo
   const circumference = 2 * Math.PI * radius; // Circunferência total
   const progress = (percentage / 100) * circumference; // Comprimento do traço da barra
-
+  
   
   const abrirModal = () => {
     setopenModal(true);
-    console.log("abriu")
   }
 
   const fecharModal = () => {
     setopenModal(false)
-    console.log("fechou")
   }
 
   return (

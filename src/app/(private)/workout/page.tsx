@@ -21,15 +21,9 @@ export default function Page() {
         }
     }, []);
 
+    // Salvar treinos no localStorage sempre que `treinos` for alterado
     useEffect(() => {
-
-        const treinosOrdenados = [...treinos].sort((a, b) => diasDaSemana.indexOf(a.dia) - diasDaSemana.indexOf(b.dia));
-
-
-        if (JSON.stringify(treinosOrdenados) !== JSON.stringify(treinos)) {
-            localStorage.setItem("treinos", JSON.stringify(treinosOrdenados));
-            setTreinos(treinosOrdenados);
-        }
+        localStorage.setItem("treinos", JSON.stringify(treinos));
     }, [treinos]);
 
     function abrirModal() {
@@ -108,8 +102,8 @@ export default function Page() {
                             </div>
                         </div>
                         <div className="flex justify-between">
-                            <button onClick={salvarTreino} className="font-[montserrat] px-4 py-2 bg-[white] border-[2px] border-black border-solid rounded-lg hover:bg-gray-200">Confirm</button>
-                            <button onClick={fecharModal} className="font-[montserrat] px-4 py-2 bg-black text-[#fff] rounded-lg hover:bg-gray-700">Cancel</button>
+                            <button name="Calories" onClick={salvarTreino} className="font-[montserrat] px-4 py-2 bg-[white] border-[2px] border-black border-solid rounded-lg hover:bg-gray-200">Confirm</button>
+                            <button name="kCal progress" onClick={fecharModal} className="font-[montserrat] px-4 py-2 bg-black text-[#fff] rounded-lg hover:bg-gray-700">Cancel</button>
                         </div>
                     </div>
                 </div>
